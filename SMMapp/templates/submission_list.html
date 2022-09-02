@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %} List of submission {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        
+		<ul>
+		    <!-- Iterate over object_list -->
+		    {% for object in object_list %}
+		    <!-- Display Objects -->
+		    <li>
+		     <a href="{% url 'submission-detail' object.pk %}">{{ object.submission_title }}</a> ({{ object.status }})
+		   </li>
+		    <hr/>
+		    <!-- If object_list is empty  -->
+		    {% empty %}
+		    <li>No submissions yet.</li>
+		    {% endfor %}
+		</ul>    
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+                          {{form.media}}
+
+{% endblock javascripts %}
+

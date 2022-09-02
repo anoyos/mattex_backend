@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} New submission {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        
+      <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Submit">
+      </form>      
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+                          {{form.media}}
+
+{% endblock javascripts %}
+

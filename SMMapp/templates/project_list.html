@@ -1,0 +1,8 @@
+<h1>Projects</h1>
+<ul>
+{% for project in object_list %}
+    <li>{{ project.project_name }}</li>
+{% empty %}
+    <li>No projects yet.</li>
+{% endfor %}
+</ul>

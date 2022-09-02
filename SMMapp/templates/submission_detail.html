@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} List of submission {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        
+    	<h2>Submission details:</h2>
+
+    	<p><h3>Title: </h3>{{object.submission_title}}</p>
+    	<p><h3>Status: </h3>{{object.status}}</p>
+    	<p><h3>Number: </h3>{{object.document_number}}</p>
+
+
+			    {% for label, value in object.fields.items %}
+			            <p>{{ label }} : {{ value }}</p>
+			    {% endfor %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+                          {{form.media}}
+
+{% endblock javascripts %}
+

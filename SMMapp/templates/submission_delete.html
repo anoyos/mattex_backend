@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} New submission {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        
+		<form method="post">{% csrf_token %}
+		    <p>Are you sure you want to delete "{{ object }}"?</p>
+		    {{ form }}
+		    <input type="submit" value="Confirm">
+		</form>     
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+                          {{form.media}}
+
+{% endblock javascripts %}

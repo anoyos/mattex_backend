@@ -1,0 +1,254 @@
+{% load static %}	
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <!-- Bootstrap CSS -->
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>Submission cover page</title>
+  </head>
+<body>
+
+
+	{% for block in sorted_blocks %}
+	<div>
+
+		{% if 'header' in block %}
+
+		<table style="width: 100%;">
+		        <tr>
+		        	{% for field in header_sorted_fields %}
+		        		{% if 'client_logo' in field %}
+				            <td style="text-align:center">
+				            	<img src="{{client_logo_1_url}}" height="100px" />
+				            	<img src="{{client_logo_2_url}}" height="100px" />
+				            </td>
+				        {% elif 'project_name' in field %}
+				            <td style="text-align:center;">
+							    <div> 
+									<div><strong>Contract no.:</strong> {{ submission.header_submission.contract_no }}</div>
+									<div>{{ submission.header_submission.project_name }}</div><br>
+									{% if submission.header_submission.ctrl_num_visible %}
+									<div><strong>Form control no.:</strong> {{ submission.header_submission.form_control_no }}</div>
+									{% else %}
+				 					&nbsp
+									{% endif %}
+							    </div>
+				            </td>
+				        {% elif 'contractor_logo' in field %}
+				            <td style="text-align:center;">
+   								<img src="data:image/jpeg;base64, {{contractor_logo}}" height="100px"></img>
+				            </td>
+				        {% endif %}
+		            {% endfor %}
+		        </tr>
+		</table>
+		<br>
+
+	<div style="text-align: center;width=100%;">    
+		<h1>{{submission_type_verbose|upper}} SUBMISSION FORM</h1>
+	</div>
+
+		{% endif %}
+	</div>
+
+	<div>
+		{% if 'salutation' in block %}		
+		<hr>
+		{% for field in salutation_sorted_fields %}
+			{% if 'to' in field %}
+				<div><strong>To:</strong> {{ submission.salutation_submission.to }}</div>
+			{% elif 'attn' in field and submission.salutation_submission.attn_visible %}
+				<div><strong>Attn:</strong> {{ submission.salutation_submission.attn }}</div>
+			{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
+
+	<div>
+		{% if 'title' in block %}	
+		<hr>	
+		{% for field in title_sorted_fields %}
+			{% if 'title' in field %}
+				<div><strong>Title of submission:</strong> {{ submission.title }}</div>
+			{% elif 'submission_ref_no' in field %}
+				<div><strong>Submission Ref. No.:</strong> {{ submission.submission_ref_no }}</div>
+			{% elif 'free_text_field' in field %}
+				{% for key,value in title_free_text_sorted_fields.items %}
+					<div><strong>{{key}} :</strong> {{value}}</div>
+				{% endfor %}
+			{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
+
+
+	<div>
+		{% if 'reference' in block %}		
+		<hr>
+		<h2>Reference</h2>	
+		{% for key,value in reference_sorted_fields.items %}
+			<div><strong>{{key}} :</strong> {{value}}</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+
+	<div>
+		{% if 'descriptionofcontent' in block %}
+		<hr>
+		<h2>Description of content</h2>	
+		{% if submission.descriptionofcontent_submission.show_top_free_text %}
+		{{ submission.descriptionofcontent_submission.top_free_text }}
+		{% else %}
+		&nbsp
+		{% endif %}
+
+		{% for key,value in descriptionofcontent_sorted_fields.items %}
+			<div><strong>{{key}} :</strong> {{value}}</div>
+		{% endfor %}
+
+		{% if submission.descriptionofcontent_submission.show_bottom_free_text %}
+		<br>
+		{{ submission.descriptionofcontent_submission.bottom_free_text }}
+		{% else %}
+		&nbsp
+		{% endif %}
+
+		{% endif %}
+
+
+	</div>
+
+	<div>
+		{% if 'aboutthissubmission' in block %}		
+		<hr>
+		{% for field in aboutthissubmission_sorted_fields %}
+			{% if 'purpose_of_submission' in field and submission.aboutthissubmission_submission.purpose_of_submission %}		
+
+					<table>
+						<tr>
+					{% for key,value in submission.aboutthissubmission_submission.purpose_of_submission.items %}
+						<th>{{key}} </th>
+					{% endfor %}
+						</tr>
+
+						<tr> 
+					{% for key,value in submission.aboutthissubmission_submission.purpose_of_submission.items %}
+						<td style="text-align:center">
+						{% if value == True %}
+					<img src="{{full_checkbox_url}}" height="20px" />  
+	  					{% else %}
+					<img src="{{empty_checkbox_url}}" height="20px" />  
+	  					{% endif %}
+	  				</td>
+	  				{% endfor %}
+	  			</tr>
+	  				</table>
+	  								<br>
+
+			{% elif 'anticipated_date_of_reply' in field %}
+				<div><strong>Anticipated date of reply:</strong> {{ submission.aboutthissubmission_submission.anticipated_date_of_reply }}</div>
+			{% elif 'remarks' in field %}
+				<div><strong>Remarks:</strong> {{ submission.aboutthissubmission_submission.remarks }}</div>
+			{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
+
+
+	<div>
+		{% if 'futurereply' in block %}	
+		<hr>	
+		{% for field in futurereply_sorted_fields %}
+			{% if 'reply' in field %}
+				<div><strong>Reply:</strong>
+					<table>
+						<tr>
+					{% for key,value in submission.futurereply_submission.reply.items %}
+						<th>{{key}} </th>
+					{% endfor %}
+						</tr>
+
+						<tr> 
+					{% for key,value in submission.futurereply_submission.reply.items %}
+						<td style="text-align:center">
+						{% if value == True %}
+					<img src="{{full_checkbox_url}}" height="20px" />  
+	  					{% else %}
+					<img src="{{empty_checkbox_url}}" height="20px" />  
+	  					{% endif %}
+	  				</td>
+	  				{% endfor %}
+	  			</tr>
+	  				</table>
+				</div>
+				<br>
+			{% elif 'free_text' in field %}
+				{% for key,value in submission.futurereply_submission.free_text.items %}
+				<div><strong>{{key}}:</strong> 
+				{{value}}
+				</div>
+				{% endfor %}
+			<br>
+				<table style="border: 0px solid black; 
+					padding-left: 2px;
+					padding-top: 2px;">
+					<tr>
+								<td>
+									<p>Name: {{submission.futurereply_submission.name}} </p>
+									<p>{{submission.futurereply_submission.date}} </p>
+									<p><strong>Signature:  </strong> 
+								{% if submission.futurereply_submission.signature %} 				
+									<img src="data:image/jpeg;base64, {{submission.futurereply_submission.signature}}" height="30px"></img>
+								{% else %}
+									&nbsp
+								{% endif %}
+							</p>	
+						</td>
+			  		</tr>
+			  	</table>
+
+				<br>
+			{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
+
+	{% endfor %}
+
+	{% if submission.signoff_submission %}
+	<br>
+		<hr>	
+		<table style="border: 1px solid black; 
+			padding-left: 2px;
+			padding-top: 2px;">
+			<tr>
+				{% for block in submission.signoff_submission.blocks %}
+						<td>
+							<p>{{block.name}} </p>
+							<p>{{block.job_title}} </p>
+							<p>Signature:  	
+									<img src="data:image/jpeg;base64, {{block.signature}}" height="30px"></img>
+							</p>
+						</td>
+	  			{% endfor %}				
+	  		</tr>
+	  	</table>
+	<br>
+	  			{% if submission.circulation_identification_visible %}
+	  				Circulation: {{submission.circulation_identification}}
+	  			{% else %}
+	  				&nbsp
+				{% endif %}
+		{% else %}
+		&nbsp
+		{% endif %}
+
+    <!-- jQuery and Bootstrap Bundle-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>

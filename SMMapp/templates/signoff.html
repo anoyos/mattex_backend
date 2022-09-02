@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} New submission {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        
+      <form action="" method="post">
+          {% csrf_token %}
+               {{ form.non_field_errors }}
+
+                     {% for field in form %}
+                        <label>{{ field.label }}{% if field.field.required %} * {% endif %}</label>
+
+                      {{ field }}
+                     {% endfor %}
+          <input type="submit" value="Submit">
+      </form>      
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+                          {{form.media}}
+
+{% endblock javascripts %}
+
